@@ -81,6 +81,9 @@ function initAll() {
       basicData.luckyUsers = data.luckyData;
 
       let prizeIndex = basicData.prizes.length - 1;
+      console.log(prizeIndex);
+      console.log(data.luckyData);
+      console.log(basicData.prizes);
       for (; prizeIndex > -1; prizeIndex--) {
         if (
           data.luckyData[prizeIndex] &&
@@ -94,6 +97,7 @@ function initAll() {
         break;
       }
 
+      console.log(currentPrizeIndex);
       showPrizeList(currentPrizeIndex);
       let curLucks = basicData.luckyUsers[currentPrize.type];
       setPrizeData(currentPrizeIndex, curLucks ? curLucks.length : 0, true);
@@ -242,7 +246,7 @@ function bindEvent() {
         if (!doREset) {
           return;
         }
-        addQipao("重置所有数据，重新抽奖");
+        addQipao("已重置所有数据，可重新抽奖~");
         addHighlight();
         resetCard();
         // 重置所有数据
@@ -503,17 +507,31 @@ function selectCard(duration = 600) {
     for (let i = selectedCardIndex.length; i > 0; i--) {
       locates.push({
         x: tag * width * Resolution,
-        y: 0 * Resolution
+        y: 0
       });
       tag++;
     }
   }
 
-  let text = currentLuckys.map(item => item[1]);
-  addQipao(
-    `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
-  );
+  console.log(currentLuckys);
 
+  // let text = currentLuckys.map(function (item){
+  //   if (item === undefined) {
+  //     return;
+  //   }
+  //
+  //   return item[1];
+  // });
+
+  let text = getLuckyUserNames(currentLuckys);
+  // let text = currentLuckys.map(item => item[1]);
+
+  console.log(text);
+
+  addQipao(
+      `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
+  );
+  console.log(selectedCardIndex);
   selectedCardIndex.forEach((cardIndex, index) => {
     changeCard(cardIndex, currentLuckys[index]);
     var object = threeDCards[cardIndex];
@@ -553,6 +571,26 @@ function selectCard(duration = 600) {
       // 动画结束后可以操作
       setLotteryStatus();
     });
+}
+
+/**
+ * 获取幸运得奖用户名
+ */
+function getLuckyUserNames(users) {
+  let validUsers = [];
+
+  console.log(users);
+
+  users.forEach((item, index) => {
+    console.log(item)
+    console.log(index)
+
+    if (item !== undefined) {
+      validUsers[index] = item[1]
+    }
+  })
+
+  return validUsers
 }
 
 /**
@@ -627,15 +665,30 @@ function lottery() {
       leftCount = basicData.leftUsers.length,
       leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0);
 
+    console.log("leftCount", leftCount);
+    console.log("basicData.users", basicData.users.slice());
+    console.log("basicData.leftUsers", basicData.leftUsers);
+
+    console.log(basicData.users.slice());
+
     if (leftCount < perCount) {
-      addQipao("剩余参与抽奖人员不足，现在重新设置所有人员可以进行二次抽奖！");
-      basicData.leftUsers = basicData.users.slice();
-      leftCount = basicData.leftUsers.length;
+      if (leftCount <= 0) {
+        addQipao("剩余参与抽奖人员不足");
+        setLotteryStatus();
+        return;
+      }else {
+        // basicData.leftUsers = basicData.users.slice();
+        // console.log(basicData);
+        // leftCount = basicData.leftUsers.length;
+        perCount = leftCount
+      }
     }
 
     for (let i = 0; i < perCount; i++) {
       let luckyId = random(leftCount);
-      currentLuckys.push(basicData.leftUsers.splice(luckyId, 1)[0]);
+      let luckyUser = basicData.leftUsers.splice(luckyId, 1)[0];
+
+      currentLuckys.push(luckyUser);
       leftCount--;
       leftPrizeCount--;
 
@@ -705,8 +758,10 @@ function random(num) {
  * 切换名牌人员信息
  */
 function changeCard(cardIndex, user) {
+  if (user === undefined) {
+    return
+  }
   let card = threeDCards[cardIndex].element;
-
   card.innerHTML = `<div class="company">${COMPANY}</div><div class="name">${
     user[1]
   }</div><div class="details">${user[0] || ""}<br/>${user[2] || "PSST"}</div>`;
