@@ -44,10 +44,12 @@ let rotateObj;
 let selectedCardIndex = [],
   rotate = false,
   basicData = {
-    prizes: [], //奖品信息
-    users: [], //所有人员
+    prizes: [],     //奖品信息
+    users: [],      //所有人员
     luckyUsers: {}, //已中奖人员
-    leftUsers: [] //未中奖人员
+    leftUsers: [],  //未中奖人员
+    allUsers :{},   // 根据工号存储所有参与人员名单
+    allLuckUsers :{}, // 根据工号存储中奖人员
   },
   interval,
   // 当前抽的奖项，从最低奖开始抽，直到抽到大奖
@@ -78,12 +80,22 @@ function initAll() {
 
       // 读取当前已设置的抽奖结果
       basicData.leftUsers = data.leftUsers;
+
+      console.log("oldLeftUsers",data.leftUsers);
+
+      let newLeftUser = [];
+      basicData.leftUsers.forEach(function (u){
+        if (!basicData.allLuckUsers.hasOwnProperty(u[0])){
+          newLeftUser.push(u)
+        }
+      })
+
+      console.log("newLeftUser",newLeftUser);
+
+      basicData.leftUsers = newLeftUser;
       basicData.luckyUsers = data.luckyData;
 
       let prizeIndex = basicData.prizes.length - 1;
-      console.log(prizeIndex);
-      console.log(data.luckyData);
-      console.log(basicData.prizes);
       for (; prizeIndex > -1; prizeIndex--) {
         if (
           data.luckyData[prizeIndex] &&
@@ -108,7 +120,11 @@ function initAll() {
     url: "/getUsers",
     success(data) {
       basicData.users = data;
-
+      data.forEach(function (user) {
+        let userId = user[0].trim()
+        basicData.allUsers[userId] = user
+      })
+      console.log(basicData.allUsers);
       initCards();
       // startMaoPao();
       animate();
@@ -254,6 +270,7 @@ function bindEvent() {
         currentLuckys = [];
         basicData.leftUsers = Object.assign([], basicData.users);
         basicData.luckyUsers = {};
+        basicData.allLuckUsers = {};
         currentPrizeIndex = basicData.prizes.length - 1;
         currentPrize = basicData.prizes[currentPrizeIndex];
 
@@ -312,9 +329,9 @@ function switchScreen(type) {
     case "enter":
       btns.enter.classList.remove("none");
       btns.lotteryBar.classList.add("none");
-      // document.querySelectorAll(".element").forEach(node => {
-      //   node.classList.add("show-prize-background");
-      // });
+      document.querySelectorAll(".screen-card-no-num").forEach(node => {
+        node.classList.remove("show-prize-background");
+      });
       transform(targets.table, 2000);
       break;
     default:
@@ -322,6 +339,7 @@ function switchScreen(type) {
       btns.lotteryBar.classList.remove("none");
       document.querySelectorAll(".element").forEach(node => {
         node.classList.add("show-prize-background");
+        node.classList.add("screen-card-num");
       });
       transform(targets.sphere, 2000);
       break;
@@ -345,10 +363,6 @@ function createCard(user, isBold, id, showTable) {
   var element = createElement();
   element.id = "card-" + id;
 
-  if (id===18||id===17){
-    console.log(user,isBold,id,showTable);
-  }
-
   if (isBold) {
     element.className = "element lightitem";
     if (showTable) {
@@ -363,8 +377,10 @@ function createCard(user, isBold, id, showTable) {
 
   if (isBold) {
     if (showTable) {
+      element.classList.add("screen-card-num");
     }
   } else {
+    element.classList.add("screen-card-no-num");
     element.classList.remove("show-prize-background");
   }
 
@@ -533,8 +549,6 @@ function selectCard(duration = 600) {
     }
   }
 
-  console.log(currentLuckys);
-
   // let text = currentLuckys.map(function (item){
   //   if (item === undefined) {
   //     return;
@@ -551,7 +565,6 @@ function selectCard(duration = 600) {
   addQipao(
       `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
   );
-  console.log(selectedCardIndex);
   selectedCardIndex.forEach((cardIndex, index) => {
     changeCard(cardIndex, currentLuckys[index]);
     var object = threeDCards[cardIndex];
@@ -599,12 +612,7 @@ function selectCard(duration = 600) {
 function getLuckyUserNames(users) {
   let validUsers = [];
 
-  console.log(users);
-
   users.forEach((item, index) => {
-    console.log(item)
-    console.log(index)
-
     if (item !== undefined) {
       validUsers[index] = item[1]
     }
@@ -685,12 +693,6 @@ function lottery() {
       leftCount = basicData.leftUsers.length,
       leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0);
 
-    console.log("leftCount", leftCount);
-    console.log("basicData.users", basicData.users.slice());
-    console.log("basicData.leftUsers", basicData.leftUsers);
-
-    console.log(basicData.users.slice());
-
     if (leftCount < perCount) {
       if (leftCount <= 0) {
         addQipao("剩余参与抽奖人员不足");
@@ -723,6 +725,25 @@ function lottery() {
       }
     }
 
+    console.log("curLuckys", currentLuckys);
+
+    currentLuckys.forEach(function (u){
+      basicData.allLuckUsers[u[0]] = u;
+    })
+
+    let newLeftUser = [];
+
+    console.log("allLuckUsers",basicData.allLuckUsers);
+
+    basicData.leftUsers.forEach(function (u){
+      if (!basicData.allLuckUsers.hasOwnProperty(u[0])){
+        newLeftUser.push(u)
+      }
+    })
+
+    basicData.leftUsers = newLeftUser
+    console.log("newLeftUser", newLeftUser);
+
     // console.log(currentLuckys);
     selectCard();
   });
@@ -739,6 +760,10 @@ function saveData() {
 
   let type = currentPrize.type,
     curLucky = basicData.luckyUsers[type] || [];
+
+  currentLuckys.forEach(function (lu){
+      basicData.allLuckUsers[lu[0]] = lu
+  })
 
   curLucky = curLucky.concat(currentLuckys);
 
