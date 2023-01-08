@@ -197,6 +197,7 @@ function initCards() {
 
   if (showTable) {
     switchScreen("enter");
+    console.log("enter???")
   } else {
     switchScreen("lottery");
   }
@@ -311,11 +312,17 @@ function switchScreen(type) {
     case "enter":
       btns.enter.classList.remove("none");
       btns.lotteryBar.classList.add("none");
+      // document.querySelectorAll(".element").forEach(node => {
+      //   node.classList.add("show-prize-background");
+      // });
       transform(targets.table, 2000);
       break;
     default:
       btns.enter.classList.add("none");
       btns.lotteryBar.classList.remove("none");
+      document.querySelectorAll(".element").forEach(node => {
+        node.classList.add("show-prize-background");
+      });
       transform(targets.sphere, 2000);
       break;
   }
@@ -338,6 +345,10 @@ function createCard(user, isBold, id, showTable) {
   var element = createElement();
   element.id = "card-" + id;
 
+  if (id===18||id===17){
+    console.log(user,isBold,id,showTable);
+  }
+
   if (isBold) {
     element.className = "element lightitem";
     if (showTable) {
@@ -345,9 +356,18 @@ function createCard(user, isBold, id, showTable) {
     }
   } else {
     element.className = "element";
-    element.style.backgroundColor =
-      "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
+    element.style.backgroundColor = "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
   }
+
+  element.classList.add("show-prize-background");
+
+  if (isBold) {
+    if (showTable) {
+    }
+  } else {
+    element.classList.remove("show-prize-background");
+  }
+
   //添加公司标识
   element.appendChild(createElement("company", COMPANY));
 

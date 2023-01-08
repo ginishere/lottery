@@ -17,29 +17,29 @@ const prizes = [
     type: 1,
     count: 6,
     title: "一等奖",
-    text: "一等奖",
-    img: "../img/secrit.jpg"
+    text: "",
+    img: "../img/99/first.jpg"
   },
   {
     type: 2,
     count: 9,
-    text: "二等奖",
+    text: "",
     title: "二等奖",
-    img: "../img/kindle.jpg"
+    img: "../img/99/second.jpg"
   },
   {
     type: 3,
     count: 19,
-    text: "三等奖",
+    text: "",
     title: "三等奖",
-    img: "../img/mbp.jpg"
+    img: "../img/99/third.jpg"
   },
   {
     type: 4,
     count: 69,
-    text: "幸运奖",
+    text: "",
     title: "幸运奖",
-    img: "../img/huawei.png"
+    img: "../img/99/lucky.jpg"
   },
 ];
 

@@ -100,7 +100,7 @@ a {
 }
 
 button {
-  color: rgba(127, 255, 255, 0.75);
+  color: rgb(255, 255, 255);
   background: transparent;
   outline: 1px solid rgba(127, 255, 255, 0.75);
   border: 0;
@@ -121,13 +121,19 @@ button:active {
 }
 
 .highlight {
-  background-color: rgba(253, 105, 0, 0.95) !important;
+  background-color: rgb(255, 255, 255) !important;
   box-shadow: 0 0 12px rgba(253, 105, 0, 0.95);
   border: 1px solid rgba(253, 105, 0, 0.25);
 }
 
 .highlight.element .name {
   text-shadow: 0 0 16px rgba(255, 255, 255, 0.95);
+}
+
+.show-prize-background {
+  background-image: url("../img/99/card.jpg");
+  background-position: center;
+  background-size: cover;
 }
 
 .prize.element .name {
@@ -175,7 +181,7 @@ button:active {
   position: fixed;
   left: 0;
   padding-left: 1.2vh;
-  top: 1.2vh;
+  top: 8.2vh;
   z-index: 2;
 }
 
@@ -206,7 +212,7 @@ button:active {
   width: 8vh;
   height: 8vh;
   margin-right: 1.2vh;
-  border-radius: 50%;
+  border-radius: 100%;
   background-color: #fff;
   text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
   overflow: hidden;
@@ -228,6 +234,7 @@ button:active {
 .prize-title {
   margin: 4px 0;
   font-size: 1.8vh;
+  color: #ffffff;
 }
 
 .prize-count {
@@ -468,7 +475,7 @@ button:active {
 .prize-shine {
   font-size: 5vh;
   font-weight: bold;
-  color: #db5c58;
+  color: #f8f5f5;
   vertical-align: middle;
   padding: 0 6px;
 }
@@ -476,7 +483,7 @@ button:active {
 .qipao-container {
   position: fixed;
   right: 0;
-  top: 10vh;
+  top: 25vh;
   bottom: 1vh;
   width: 24vh;
   z-index: 2;
@@ -489,14 +496,14 @@ button:active {
   margin: 4px 0;
   box-sizing: border-box;
   font-size: 14px;
-  background-color: rgba(127, 255, 255, 0.25);
-  color: rgba(127, 255, 255, 0.75);
+  background-color: rgba(127, 255, 255, 0.3);
+  color: rgb(255, 255, 255);
 }
 
 .music {
   position: fixed;
-  top: 3vh;
-  right: 4vh;
+  top: 15vh;
+  right: 5vh;
   z-index: 5;
 }
 

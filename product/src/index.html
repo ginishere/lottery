@@ -1,12 +1,12 @@
-<style>
+<style xmlns="http://www.w3.org/1999/html">
   .body-image {
-    background-image: url("./img/ipad.jpg");
+    background-image: url("./img/99/background.jpg");
     background-color: #cccccc;
     height: max-content;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
+    position: center;
   }
 </style>
 
@@ -22,13 +22,13 @@
     <!-- <link rel="stylesheet" href="./index.css"> -->
   </head>
 
-  <body class="body-image">
-    <script src="./lib/three.min.js"></script>
-    <script src="./lib/tween.min.js"></script>
-    <script src="./lib/TrackballControls.js"></script>
-    <script src="./lib/CSS3DRenderer.js"></script>
-    <script src="./lib/ajax.js"></script>
-
+  <body>
+  <script src="./lib/three.min.js"></script>
+  <script src="./lib/tween.min.js"></script>
+  <script src="./lib/TrackballControls.js"></script>
+  <script src="./lib/CSS3DRenderer.js"></script>
+  <script src="./lib/ajax.js"></script>
+  <div  class="body-image">
     <div class="canvas-box">
       <canvas id="canvas">你的浏览器不支持canvas</canvas>
     </div>
@@ -54,6 +54,8 @@
       </div>
     </div>
 
-    <div class="qipao-container"></div>
+    <div class="qipao-container">
+    </div>
+  </div>
   </body>
 </html>
