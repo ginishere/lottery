@@ -46,12 +46,12 @@ const prizes = [
 /**
  * 一次抽取的奖品个数与prizes对应
  */
-const EACH_COUNT = [1, 6, 9, 10, 3];
+const EACH_COUNT = [1, 6, 9, 10, 50];
 
 /**
  * 卡片公司名称标识
  */
-const COMPANY = "SSV";
+const COMPANY = "公益平台部";
 
 module.exports = {
   prizes,

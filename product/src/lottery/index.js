@@ -213,7 +213,6 @@ function initCards() {
 
   if (showTable) {
     switchScreen("enter");
-    console.log("enter???")
   } else {
     switchScreen("lottery");
   }
@@ -325,22 +324,29 @@ function bindEvent() {
 }
 
 function switchScreen(type) {
+  console.log(type,"-------------------")
   switch (type) {
     case "enter":
       btns.enter.classList.remove("none");
       btns.lotteryBar.classList.add("none");
-      document.querySelectorAll(".screen-card-no-num").forEach(node => {
-        node.classList.remove("show-prize-background");
+      document.querySelectorAll(".award-card-background").forEach(node => {
+        node.classList.remove("award-card-background");
+      });
+      document.querySelectorAll(".screen-show-non-num-card").forEach(node => {
+        node.classList.remove("award-card-background");
+      });
+      document.querySelectorAll(".screen-num-card-empty").forEach(node => {
+        node.classList.add("screen-show-num-card");
       });
       transform(targets.table, 2000);
       break;
     default:
       btns.enter.classList.add("none");
       btns.lotteryBar.classList.remove("none");
-      document.querySelectorAll(".element").forEach(node => {
-        node.classList.add("show-prize-background");
-        node.classList.add("screen-card-num");
-      });
+      // document.querySelectorAll(".element").forEach(node => {
+      //   node.classList.add("award-card-background");
+      //   node.classList.add("screen-num-card-empty");
+      // });
       transform(targets.sphere, 2000);
       break;
   }
@@ -363,6 +369,10 @@ function createCard(user, isBold, id, showTable) {
   var element = createElement();
   element.id = "card-" + id;
 
+  if (id===17||id===18) {
+    console.log(isBold,id,showTable);
+  }
+
   if (isBold) {
     element.className = "element lightitem";
     if (showTable) {
@@ -373,15 +383,18 @@ function createCard(user, isBold, id, showTable) {
     element.style.backgroundColor = "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
   }
 
-  element.classList.add("show-prize-background");
+  element.classList.add("award-card-background");
 
   if (isBold) {
     if (showTable) {
-      element.classList.add("screen-card-num");
+      // 首屏显示数字的卡片加入这些class
+      element.classList.add("screen-num-card-empty");// 用于区分显示数字的卡片样式名
+      element.classList.remove("award-card-background");
+      element.classList.add("screen-show-num-card"); // 加上首屏数字显示样式名
     }
   } else {
-    element.classList.add("screen-card-no-num");
-    element.classList.remove("show-prize-background");
+    element.classList.add("screen-show-non-num-card");
+    element.classList.remove("award-card-background");
   }
 
   //添加公司标识
@@ -566,7 +579,7 @@ function selectCard(duration = 600) {
       `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
   );
   selectedCardIndex.forEach((cardIndex, index) => {
-    changeCard(cardIndex, currentLuckys[index]);
+    changeCard(cardIndex, currentLuckys[index], "lottery");
     var object = threeDCards[cardIndex];
     new TWEEN.Tween(object.position)
       .to(
@@ -744,7 +757,6 @@ function lottery() {
     basicData.leftUsers = newLeftUser
     console.log("newLeftUser", newLeftUser);
 
-    // console.log(currentLuckys);
     selectCard();
   });
 }
@@ -802,11 +814,16 @@ function random(num) {
 /**
  * 切换名牌人员信息
  */
-function changeCard(cardIndex, user) {
+function changeCard(cardIndex, user, act="lottery") {
   if (user === undefined) {
     return
   }
   let card = threeDCards[cardIndex].element;
+
+  if (act==="lottery") {
+    card.classList.add("award-card-background");
+  }
+
   card.innerHTML = `<div class="company">${COMPANY}</div><div class="name">${
     user[1]
   }</div><div class="details">${user[0] || ""}<br/>${user[2] || "PSST"}</div>`;
@@ -843,7 +860,7 @@ function shineCard() {
         continue;
       }
       shine(cardIndex);
-      changeCard(cardIndex, basicData.leftUsers[index]);
+      changeCard(cardIndex, basicData.leftUsers[index],"shine");
     }
   }, 500);
 }
@@ -949,15 +966,15 @@ window.onload = function () {
     "click",
     function (e) {
       if (music.paused) {
-        music.play().then(
-          () => {
-            stopAnimate = false;
-            animate();
-          },
-          () => {
-            addQipao("背景音乐自动播放失败，请手动播放！");
-          }
-        );
+        // music.play().then(
+        //   () => {
+        //     stopAnimate = false;
+        //     animate();
+        //   },
+        //   () => {
+        //     addQipao("背景音乐自动播放失败，请手动播放！");
+        //   }
+        // );
       } else {
         music.pause();
         stopAnimate = true;

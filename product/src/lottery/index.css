@@ -58,16 +58,16 @@ a {
 .element {
   width: 12vh;
   height: 16vh;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
-  border: 1px solid rgba(127, 255, 255, 0.25);
+  /*box-shadow: 0 0 12px rgba(255, 127, 131, 0.75);*/
+  border: 1px solid rgb(255, 255, 255);
   text-align: center;
   cursor: default;
   transition: background-color 0.3s ease-in;
 }
 
 .element:hover {
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.75);
-  border: 1px solid rgba(127, 255, 255, 0.75);
+  box-shadow: 0 0 12px rgba(255, 127, 131, 0.75);
+  border: 1px solid rgba(255, 127, 131, 0.75);
 }
 
 .element .company {
@@ -76,7 +76,7 @@ a {
   right: 0;
   width: 100%;
   font-size: 2vh;
-  color: rgba(127, 255, 255, 0.75);
+  color: rgb(255, 255, 255, 25);
 }
 
 .element .name {
@@ -86,8 +86,8 @@ a {
   right: 0;
   font-size: 2.9vh;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 100);
+  /*text-shadow: 0 0 1vh rgb(255, 255, 255, 25);*/
 }
 
 .element .details {
@@ -96,13 +96,13 @@ a {
   left: 0;
   right: 0;
   font-size: 1.6vh;
-  color: rgba(127, 255, 255, 0.75);
+  color: rgb(255, 255, 255);
 }
 
 button {
   color: rgb(255, 255, 255);
   background: transparent;
-  outline: 1px solid rgba(127, 255, 255, 0.75);
+  outline: 1px solid rgb(255, 255, 255);
   border: 0;
   padding: 1.6vh 4vh;
   margin: 0 4.6vh;
@@ -112,12 +112,12 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 button:active {
   color: #000000;
-  background-color: rgba(0, 255, 255, 0.75);
+  background-color: rgba(0, 255, 255, 0.09);
 }
 
 .highlight {
@@ -130,7 +130,19 @@ button:active {
   text-shadow: 0 0 16px rgba(255, 255, 255, 0.95);
 }
 
-.show-prize-background {
+.screen-show-num-card {
+  background-image: url("../img/99/yellow_card.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.screen-show-non-num-card {
+  background-image: url("../img/99/pink_card.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.award-card-background {
   background-image: url("../img/99/card.jpg");
   background-position: center;
   background-size: cover;
@@ -199,9 +211,9 @@ button:active {
   justify-content: center;
   border-radius: 4px;
   flex-wrap: nowrap;
-  background-color: rgba(0, 127, 127, 0.37);
-  border: 1px solid rgba(127, 255, 255, 0.25);
-  color: rgba(127, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.20);
+  border: 1px solid rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
   width: 30vh;
   height: 10vh;
   box-sizing: border-box;
@@ -209,8 +221,8 @@ button:active {
 }
 
 .prize-item .prize-img {
-  width: 8vh;
-  height: 8vh;
+  width: 9vh;
+  height: 9vh;
   margin-right: 1.2vh;
   border-radius: 100%;
   background-color: #fff;
@@ -219,8 +231,8 @@ button:active {
 }
 
 .prize-img img {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   position: relative;
   top: 50%;
   left: 50%;
@@ -348,7 +360,7 @@ button:active {
 }
 
 .shine {
-  box-shadow: 0 0 15px 0 rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 15px 0 rgb(255, 255, 255);
   transform: scale(1.2);
   transform-origin: left center;
   position: relative;
@@ -381,7 +393,7 @@ button:active {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #03e9f4);
+  background: linear-gradient(90deg, transparent, #ffffff);
   animation: animate1 1s linear infinite
 }
 
@@ -401,7 +413,7 @@ button:active {
   right: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(180deg, transparent, #03e9f4);
+  background: linear-gradient(180deg, transparent, #ffffff);
   animation: animate2 1s linear infinite;
   animation-delay: .25s
 }
@@ -422,7 +434,7 @@ button:active {
   right: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(270deg, transparent, #03e9f4);
+  background: linear-gradient(270deg, transparent, #ffffff);
   animation: animate3 1s linear infinite;
   animation-delay: .50s
 }
