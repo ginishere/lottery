@@ -25,7 +25,7 @@ const prizes = [
 /**
  * 一次抽取的奖品个数与prizes对应
  */
-const EACH_COUNT = [1, 60];
+const EACH_COUNT = [1, 63];
 
 /**
  * 卡片公司名称标识

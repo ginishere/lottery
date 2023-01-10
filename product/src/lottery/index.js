@@ -546,17 +546,17 @@ function selectCard(duration = 600) {
   console.log(currentLuckys.length)
   console.log(tag)
 
-  // 计算位置信息, 大于5个分两排显示
-  if (currentLuckys.length > 5) {
-    let yPosition = [-87, -35, 0, 35 ,87],
+  // 计算位置信息
+  if (currentLuckys.length > 30) {
+    let yPosition = [-320, -160, 0, 160, 320, 480],
       l = selectedCardIndex.length,
-      mid = Math.ceil(l / 6);
+      mid = Math.ceil(l / 10);
 
     console.log(selectedCardIndex);
     console.log(mid);
 
-    tag = -(mid - 1) / 6;
-    for (let i = 0; i < mid; i++) {
+    tag = -(l - mid - 1) / 10;
+    for (let i = 0; i < 10; i++) {
       locates.push({
         x: tag * width * Resolution,
         y: yPosition[0] * Resolution
@@ -564,8 +564,8 @@ function selectCard(duration = 600) {
       tag++;
     }
 
-    tag = -(l - mid - 1) / 6;
-    for (let i = mid; i < 20; i++) {
+    tag = -(l - mid - 1) / 10;
+    for (let i = 10; i < 20; i++) {
       locates.push({
         x: tag * width * Resolution,
         y: yPosition[1] * Resolution
@@ -573,11 +573,38 @@ function selectCard(duration = 600) {
       tag++;
     }
 
-    tag = -(l - mid - 1) / 6;
-    for (let i = mid; i < 30; i++) {
+    tag = -(l - mid - 1) / 10;
+    for (let i = 20; i < 30; i++) {
       locates.push({
         x: tag * width * Resolution,
         y: yPosition[2] * Resolution
+      });
+      tag++;
+    }
+
+    tag = -(l - mid - 1) / 10;
+    for (let i = 30; i < 40; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[3] * Resolution
+      });
+      tag++;
+    }
+
+    tag = -(l - mid - 1) / 10;
+    for (let i = 40; i < 50; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[4] * Resolution
+      });
+      tag++;
+    }
+
+    tag = -(l - mid - 1) / 10;
+    for (let i = 50; i < 60; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[5] * Resolution
       });
       tag++;
     }
@@ -591,6 +618,8 @@ function selectCard(duration = 600) {
     }
   }
 
+  console.log(locates);
+
   // let text = currentLuckys.map(function (item){
   //   if (item === undefined) {
   //     return;
@@ -602,13 +631,12 @@ function selectCard(duration = 600) {
   let text = getLuckyUserNames(currentLuckys);
   // let text = currentLuckys.map(item => item[1]);
 
-  console.log(text);
+  // console.log(text);
 
   addQipao(
       `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
   );
   selectedCardIndex.forEach((cardIndex, index) => {
-    console.log(cardIndex, index);
     changeCard(cardIndex, currentLuckys[index], "lottery");
     var object = threeDCards[cardIndex];
     new TWEEN.Tween(object.position)
@@ -616,7 +644,7 @@ function selectCard(duration = 600) {
         {
           x: locates[index].x,
           y: locates[index].y * Resolution,
-          z: 2200
+          z: 800
         },
         Math.random() * duration + duration
       )
