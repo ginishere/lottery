@@ -540,15 +540,22 @@ function render() {
 function selectCard(duration = 600) {
   rotate = false;
   let width = 140,
-    tag = -(currentLuckys.length - 1) / 2,
+    tag = -(currentLuckys.length - 1) / 6,
     locates = [];
+
+  console.log(currentLuckys.length)
+  console.log(tag)
 
   // 计算位置信息, 大于5个分两排显示
   if (currentLuckys.length > 5) {
-    let yPosition = [-87, 87],
+    let yPosition = [-87, -35, 0, 35 ,87],
       l = selectedCardIndex.length,
-      mid = Math.ceil(l / 2);
-    tag = -(mid - 1) / 2;
+      mid = Math.ceil(l / 6);
+
+    console.log(selectedCardIndex);
+    console.log(mid);
+
+    tag = -(mid - 1) / 6;
     for (let i = 0; i < mid; i++) {
       locates.push({
         x: tag * width * Resolution,
@@ -557,11 +564,20 @@ function selectCard(duration = 600) {
       tag++;
     }
 
-    tag = -(l - mid - 1) / 2;
-    for (let i = mid; i < l; i++) {
+    tag = -(l - mid - 1) / 6;
+    for (let i = mid; i < 20; i++) {
       locates.push({
         x: tag * width * Resolution,
         y: yPosition[1] * Resolution
+      });
+      tag++;
+    }
+
+    tag = -(l - mid - 1) / 6;
+    for (let i = mid; i < 30; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[2] * Resolution
       });
       tag++;
     }
@@ -592,6 +608,7 @@ function selectCard(duration = 600) {
       `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
   );
   selectedCardIndex.forEach((cardIndex, index) => {
+    console.log(cardIndex, index);
     changeCard(cardIndex, currentLuckys[index], "lottery");
     var object = threeDCards[cardIndex];
     new TWEEN.Tween(object.position)
