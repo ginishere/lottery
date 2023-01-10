@@ -131,13 +131,13 @@ button:active {
 }
 
 .screen-show-num-card {
-  background-image: url("../img/99/yellow_card.jpg");
+  background-image: url("../img/99/gift_non_num_screen.jpg");
   background-position: center;
   background-size: cover;
 }
 
 .screen-show-non-num-card {
-  background-image: url("../img/99/pink_card.jpg");
+  background-image: url("../img/99/gift_num_screen.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -146,6 +146,10 @@ button:active {
   background-image: url("../img/99/card.jpg");
   background-position: center;
   background-size: cover;
+}
+
+.card-hidden {
+  display: none;
 }
 
 .prize.element .name {

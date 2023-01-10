@@ -393,6 +393,7 @@ function createCard(user, isBold, id, showTable) {
   }
 
   element.classList.add("award-card-background");
+  element.classList.add("all-card");
 
   if (isBold) {
     if (showTable) {
@@ -540,7 +541,7 @@ function render() {
 function selectCard(duration = 600) {
   rotate = false;
   let width = 140,
-    tag = -(currentLuckys.length - 1) / 6,
+    tag = -(currentLuckys.length - 1) / 7,
     locates = [];
 
   console.log(currentLuckys.length)
@@ -548,7 +549,7 @@ function selectCard(duration = 600) {
 
   // 计算位置信息
   if (currentLuckys.length > 30) {
-    let yPosition = [-320, -160, 0, 160, 320, 480],
+    let yPosition = [480, 320, 160, 0, -160, -320, -480],
       l = selectedCardIndex.length,
       mid = Math.ceil(l / 10);
 
@@ -608,6 +609,16 @@ function selectCard(duration = 600) {
       });
       tag++;
     }
+
+    tag = -(l - mid - 1) / 10;
+    for (let i = 60; i < 70; i++) {
+      locates.push({
+        x: tag * width * Resolution,
+        y: yPosition[6] * Resolution
+      });
+      tag++;
+    }
+
   } else {
     for (let i = selectedCardIndex.length; i > 0; i--) {
       locates.push({
@@ -845,6 +856,10 @@ function lottery() {
     console.log("newLeftUser", newLeftUser);
 
     selectCard();
+
+    document.querySelectorAll(".all-card").forEach(node => {
+      node.classList.add("card-hidden");
+    });
   });
 }
 
@@ -908,6 +923,7 @@ function changeCard(cardIndex, user, act="lottery") {
   let card = threeDCards[cardIndex].element;
 
   if (act==="lottery") {
+    card.classList.remove("all-card");
     card.classList.add("award-card-background");
   }
 

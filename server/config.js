@@ -15,17 +15,17 @@ const prizes = [
   },
   {
     type: 1,
-    count: 60,
+    count: 64,
     title: "交换礼物",
     text: "",
-    img: "../img/99/first.jpg"
+    img: "../img/99/gift_exchange.jpg"
   }
 ];
 
 /**
  * 一次抽取的奖品个数与prizes对应
  */
-const EACH_COUNT = [1, 63];
+const EACH_COUNT = [1, 64];
 
 /**
  * 卡片公司名称标识
