@@ -125,7 +125,7 @@ class Qipao {
       this.element.classList.remove("bounceInRight");
       this.element.classList.add("bounceOutRight");
       this.onComplete && this.onComplete();
-    }, 4000);
+    }, 6000);
   }
 }
 
@@ -155,9 +155,6 @@ function setPrizes(pri) {
 
 function showPrizeList(currentPrizeIndex) {
   let currentPrize = prizes[currentPrizeIndex];
-  console.log(currentPrizeIndex);
-  console.log(currentPrize);
-  console.log(defaultType);
   if (currentPrize.type === defaultType) {
     currentPrize.count === "不限制";
   }
