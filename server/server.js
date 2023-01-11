@@ -18,7 +18,7 @@ let app = express(),
   router = express.Router(),
   cwd = process.cwd(),
   dataBath = __dirname,
-  port = 8090,
+  port = 8091,
   curData = {},
   luckyData = {},
   errorData = [],
@@ -265,6 +265,7 @@ module.exports = {
     }
 
     let server = app.listen(port, () => {
+      global.console.log(server.address());
       let host = server.address().address;
       let port = server.address().port;
       global.console.log(`lottery server listenig at http://${host}:${port}`);
