@@ -777,6 +777,7 @@ function lottery() {
     console.log("perCount", perCount);
     console.log("curUniqueLuckyCount", curUniqueLuckyCount);
     console.log("leftPrizeCount", leftPrizeCount);
+    console.log("curLeftCount", curLeftCount);
 
     if (curLeftCount > 0) {
       // TODO 如果当前轮存在重复的就把次数加回去,涉及逻辑过多，来不及了，先给个提示记录一下
