@@ -243,9 +243,9 @@ function bindEvent() {
         if (rotateObj !== undefined) {
           rotateObj.stop();
         }
-        btns.lottery.innerHTML = "开始抽奖";
+        btns.lottery.innerHTML = "开始交换";
       } else {
-        addQipao("正在抽奖，抽慢一点点～～");
+        addQipao("正在出名单，慢一点点～～");
       }
       return false;
     }
@@ -260,7 +260,7 @@ function bindEvent() {
       // 进入抽奖
       case "enter":
         removeHighlight();
-        addQipao(`马上抽取[${currentPrize.title}],不要走开。`);
+        addQipao(`马上开始[${currentPrize.title}],不要走开。`);
         // rotate = !rotate;
         rotate = true;
         switchScreen("lottery");
@@ -270,12 +270,12 @@ function bindEvent() {
       // 重置
       case "reset":
         let doREset = window.confirm(
-          "是否确认重置数据，重置后，当前已抽的奖项全部清空？"
+          "是否确认重置数据，重置后，当前交换礼物名单全部清空？"
         );
         if (!doREset) {
           return;
         }
-        addQipao("已重置所有数据，可重新抽奖~");
+        addQipao("已重置所有数据，可重新开始交换礼物~");
         addHighlight();
         resetCard();
         // 重置所有数据
@@ -301,16 +301,16 @@ function bindEvent() {
           // 抽奖
           lottery();
         });
-        addQipao(`正在抽取[${currentPrize.title}],调整好姿势`);
+        addQipao(`正在开始[${currentPrize.title}],调整好姿势`);
         break;
       // 重新抽奖
       case "reLottery":
         if (currentLuckys.length === 0) {
-          addQipao(`当前还没有抽奖，无法重新抽取喔~~`);
+          addQipao(`当前还没有交换礼物名单，无法重新开始喔~~`);
           return;
         }
         setErrorData(currentLuckys);
-        addQipao(`重新抽取[${currentPrize.title}],做好准备`);
+        addQipao(`重新开始[${currentPrize.title}],做好准备`);
         setLotteryStatus(true);
         // 重新抽奖则直接进行抽取，不对上一次的抽奖数据进行保存
         // 抽奖
@@ -344,12 +344,15 @@ function switchScreen(type) {
       btns.lotteryBar.classList.add("none");
       document.querySelectorAll(".award-card-background").forEach(node => {
         node.classList.remove("award-card-background");
+        node.classList.remove("card-hidden");
       });
       document.querySelectorAll(".screen-show-non-num-card").forEach(node => {
         node.classList.remove("award-card-background");
+        node.classList.remove("card-hidden");
       });
       document.querySelectorAll(".screen-num-card-empty").forEach(node => {
         node.classList.add("screen-show-num-card");
+        node.classList.remove("card-hidden");
       });
       transform(targets.table, 2000);
       break;
@@ -645,8 +648,10 @@ function selectCard(duration = 600) {
   // console.log(text);
 
   addQipao(
-      `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
+      // `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
+      `礼物交换名单出炉啦, 快去打个招呼吧~。`
   );
+
   selectedCardIndex.forEach((cardIndex, index) => {
     changeCard(cardIndex, currentLuckys[index], "lottery");
     var object = threeDCards[cardIndex];
@@ -752,6 +757,9 @@ function resetCard(duration = 500) {
           let object = threeDCards[index];
           object.element.classList.remove("prize");
         });
+        document.querySelectorAll(".all-card").forEach(node => {
+          node.classList.remove("card-hidden");
+        });
         resolve();
       });
   });
@@ -766,7 +774,7 @@ function lottery() {
   //   btns.lottery.innerHTML = "开始抽奖";
   //   return;
   // }
-  btns.lottery.innerHTML = "结束抽奖";
+  btns.lottery.innerHTML = "结束交换";
   rotateBall().then(() => {
     // 将之前的记录置空
     currentLuckys = [];
@@ -923,6 +931,7 @@ function changeCard(cardIndex, user, act="lottery") {
   let card = threeDCards[cardIndex].element;
 
   if (act==="lottery") {
+    // 中了的人去掉all-card样式
     card.classList.remove("all-card");
     card.classList.add("award-card-background");
   }
