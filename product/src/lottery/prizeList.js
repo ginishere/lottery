@@ -247,7 +247,7 @@ let setPrizeData = (function () {
     }
 
     if (currentPrizeIndex === 0) {
-      prizeElement.prizeType.textContent = "XXX奖";
+      prizeElement.prizeType.textContent = "惊喜时刻奖";
       prizeElement.prizeText.textContent = " ";
       prizeElement.prizeLeft.textContent = "N";
       return;
